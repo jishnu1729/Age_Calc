@@ -24,6 +24,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Age_calculatorTheme {
+                HomePage()
             }
         }
     }

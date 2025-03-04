@@ -1,28 +1,41 @@
 package com.jkb.age_calculator
 
 import android.graphics.Paint.Style
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jkb.age_calculator.ui.theme.AccentColor
 import com.jkb.age_calculator.ui.theme.DarkBackgroundColor
 import com.jkb.age_calculator.ui.theme.DarkContentColor
+import com.jkb.age_calculator.ui.theme.DarkForegroundColor
 import com.jkb.age_calculator.ui.theme.DarkTextColor
 
 private val shortDescription =
@@ -50,6 +63,9 @@ fun HomePage() {
             fontWeight = FontWeight.Light
         )
         BodySection(modifier = Modifier.align(Alignment.Center))
+        CalculateButton(modifier = Modifier
+            .align(Alignment.BottomEnd)
+            .padding(24.dp))
     }
 }
 
@@ -58,6 +74,7 @@ fun BodySection(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
+            .padding(14.dp)
             .clip(RoundedCornerShape(30.dp))
             .background(DarkContentColor), horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -69,6 +86,7 @@ fun BodySection(modifier: Modifier = Modifier) {
             fontWeight = FontWeight.Light
         )
         Spacer(modifier = Modifier.height(30.dp))
+        DatePickerButton()
         Text(
             modifier = Modifier.padding(35.dp),
             text = shortDescription,
@@ -77,5 +95,54 @@ fun BodySection(modifier: Modifier = Modifier) {
         )
 
 
+    }
+}
+
+@Composable
+fun DatePickerButton() {
+    Row(
+        modifier = Modifier
+            .clip(RoundedCornerShape(18.dp))
+            .background(color = DarkForegroundColor)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple()
+            ){
+                //Todo
+            },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            modifier = Modifier.padding(18.dp),
+            text = "DD-MM-YYYY",
+            color = Color.White,
+            style = MaterialTheme.typography.bodyMedium
+        )
+        Image(
+            painter = painterResource(R.drawable.calendar_month_24px),
+            contentDescription = "Date picker"
+        )
+
+        Spacer(modifier = Modifier.width(18.dp))
+    }
+}
+
+@Composable
+fun CalculateButton(modifier: Modifier = Modifier) {
+    Button(
+        modifier = modifier, onClick = {
+            // TODO
+        },
+        colors = ButtonColors(
+            contentColor = Color.White,
+            containerColor = AccentColor,
+            disabledContentColor = DarkForegroundColor,
+            disabledContainerColor = DarkContentColor
+        )
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.chevron_right_24px),
+            contentDescription = "Calculate"
+        )
     }
 }
