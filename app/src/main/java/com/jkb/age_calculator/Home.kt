@@ -44,9 +44,9 @@ import com.jkb.age_calculator.ui.theme.DarkTextColor
 private val shortDescription =
     "The Age Calculator app allows you to quickly and easily calculate your age in years, months, and days. Simply enter your date of birth, and get instant results, including age differences between multiple individuals. User-friendly and efficient, it's perfect for planning birthdays and exploring age-related milestones!"
 
-@Preview
+
 @Composable
-fun HomePage(dateText: String = "DD-MM-YYYY", onClick: () -> Unit = {}) {
+fun HomePage(dateText: String = "DD-MM-YYYY", onClick: () -> Unit = {}, onClickCalc: () -> Unit) {
 
     Box(
         modifier = Modifier
@@ -72,7 +72,9 @@ fun HomePage(dateText: String = "DD-MM-YYYY", onClick: () -> Unit = {}) {
         CalculateButton(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(24.dp)
+                .padding(24.dp),
+            dateText = dateText,
+            onClick = { onClickCalc() }
         )
     }
 }
@@ -139,17 +141,19 @@ fun DatePickerButton(onClick: () -> Unit, dateText: String) {
 }
 
 @Composable
-fun CalculateButton(modifier: Modifier = Modifier) {
+fun CalculateButton(modifier: Modifier = Modifier, onClick: () -> Unit = {}, dateText: String) {
     Button(
         modifier = modifier, onClick = {
             // TODO
+            onClick()
         },
         colors = ButtonColors(
             contentColor = Color.White,
             containerColor = AccentColor,
             disabledContentColor = DarkForegroundColor,
             disabledContainerColor = DarkContentColor
-        )
+        ),
+        enabled = dateText != "DD-MM-YYYY"
     ) {
         Icon(
             painter = painterResource(R.drawable.chevron_right_24px),
