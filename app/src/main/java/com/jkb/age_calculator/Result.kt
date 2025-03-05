@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jkb.age_calculator.ui.theme.AccentColor
@@ -46,7 +47,7 @@ private val shortDescription =
 
 @Preview
 @Composable
-fun HomePage(dateText: String = "DD-MM-YYYY", onClick: () -> Unit = {}) {
+fun ResultPage() {
 
     Box(
         modifier = Modifier
@@ -59,26 +60,20 @@ fun HomePage(dateText: String = "DD-MM-YYYY", onClick: () -> Unit = {}) {
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 100.dp),
-            text = "Let's Find Out \n Your Real Age",
+            text = "So you are 30 years old.",
             color = Color.White,
             style = MaterialTheme.typography.headlineSmall,
             fontFamily = FontFamily.SansSerif,
             fontWeight = FontWeight.Light
         )
-        BodySection(
+        BodyOfResult(
             modifier = Modifier.align(Alignment.Center),
-            dateText = dateText,
-            onClick = { onClick() })
-        CalculateButton(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(24.dp)
         )
     }
 }
 
 @Composable
-fun BodySection(modifier: Modifier = Modifier, dateText: String, onClick: () -> Unit) {
+fun BodyOfResult(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -88,13 +83,39 @@ fun BodySection(modifier: Modifier = Modifier, dateText: String, onClick: () -> 
     ) {
         Spacer(modifier = Modifier.height(30.dp))
         Text(
-            text = "date of birth".uppercase(),
+            text = "details".uppercase(),
             color = DarkTextColor,
             fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Light
+            fontWeight = FontWeight.Light,
+            textDecoration = TextDecoration.Underline
         )
         Spacer(modifier = Modifier.height(30.dp))
-        DatePickerButton(onClick = { onClick() }, dateText = dateText)
+        Column {
+            Text(
+                text = "Years: 30",
+                color = Color.White,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Light
+            )
+            Text(
+                text = "Month: 30",
+                color = Color.White,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Light
+            )
+            Text(
+                text = "Days: 30",
+                color = Color.White,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Light
+            )
+            Text(
+                text = "Minutes: 30",
+                color = Color.White,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Light
+            )
+        }
         Text(
             modifier = Modifier.padding(35.dp),
             text = shortDescription,
@@ -106,54 +127,3 @@ fun BodySection(modifier: Modifier = Modifier, dateText: String, onClick: () -> 
     }
 }
 
-@Composable
-fun DatePickerButton(onClick: () -> Unit, dateText: String) {
-
-    val context = LocalContext.current
-    Row(
-        modifier = Modifier
-            .clip(RoundedCornerShape(18.dp))
-            .background(color = DarkForegroundColor)
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple()
-            ) {
-                //Todo
-                onClick()
-            },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            modifier = Modifier.padding(18.dp),
-            text = dateText,
-            color = Color.White,
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Image(
-            painter = painterResource(R.drawable.calendar_month_24px),
-            contentDescription = "Date picker"
-        )
-
-        Spacer(modifier = Modifier.width(18.dp))
-    }
-}
-
-@Composable
-fun CalculateButton(modifier: Modifier = Modifier) {
-    Button(
-        modifier = modifier, onClick = {
-            // TODO
-        },
-        colors = ButtonColors(
-            contentColor = Color.White,
-            containerColor = AccentColor,
-            disabledContentColor = DarkForegroundColor,
-            disabledContainerColor = DarkContentColor
-        )
-    ) {
-        Icon(
-            painter = painterResource(R.drawable.chevron_right_24px),
-            contentDescription = "Calculate"
-        )
-    }
-}
